@@ -17,7 +17,7 @@ afterEach(() => {
 });
 
 // Import after setting up the mock strategy
-import { fetchForecast, fetchHistorical } from './open-meteo';
+import { fetchForecast, fetchHistorical } from '@/lib/api/open-meteo';
 
 function makeForecastResponse() {
   return {

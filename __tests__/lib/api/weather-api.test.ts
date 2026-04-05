@@ -18,7 +18,7 @@ afterEach(() => {
   delete process.env.WEATHER_API_KEY;
 });
 
-import { searchLocations, fetchAlerts } from './weather-api';
+import { searchLocations, fetchAlerts } from '@/lib/api/weather-api';
 
 function mockResponse(body: unknown, status = 200, statusText = 'OK') {
   mockFetch.mockResolvedValueOnce(
