@@ -2,6 +2,15 @@
 
 A weather web application with real-time forecasts, weather alerts, and historical trends.
 
+## Tech Stack
+
+- **Framework:** Next.js 16 (App Router), React 19, TypeScript (strict mode)
+- **Styling:** Tailwind CSS v3
+- **Charts:** Recharts 2.15+
+- **Data Fetching:** TanStack Query v5
+- **Timezone:** Luxon
+- **Testing:** Jest, React Testing Library, MSW
+
 ## Getting Started
 
 1. Install dependencies:
