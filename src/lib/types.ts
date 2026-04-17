@@ -1,3 +1,13 @@
+export interface Location {
+  name: string;
+  region: string;
+  country: string;
+  lat: number;
+  lon: number;
+  timezone: string;
+  slug: string;
+}
+
 export interface CurrentWeather {
   temperature: number;
   feelsLike: number;
@@ -65,4 +75,16 @@ export interface LocationSearchResult {
   lat: number;
   lon: number;
   url: string;
+}
+
+export interface SeasonalNotice {
+  id: string;
+  message: string;
+  type: 'info' | 'tip' | 'seasonal';
+  icon?: string;
+}
+
+export interface ApiErrorResponse {
+  error: string;
+  status: number;
 }
