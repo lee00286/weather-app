@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+import { WeatherTabNav } from '@/components/ui/WeatherTabNav';
+
 function decodeSlug(slug: string): string {
   return decodeURIComponent(slug)
     .replace(/-/g, ' ')
@@ -18,7 +20,7 @@ export default async function WeatherLayout({
 
   return (
     <main id="main-content" className="flex min-h-screen flex-col bg-white dark:bg-gray-950">
-      <header className="sticky top-0 z-10 border-b border-gray-200 bg-white/90 backdrop-blur dark:border-gray-800 dark:bg-gray-950/90">
+      <header className="sticky top-0 z-20 border-b border-gray-200 bg-white/90 backdrop-blur dark:border-gray-800 dark:bg-gray-950/90">
         <div className="mx-auto flex max-w-2xl items-center gap-3 px-4 py-3">
           <Link
             href="/"
@@ -32,6 +34,8 @@ export default async function WeatherLayout({
           </h1>
         </div>
       </header>
+
+      <WeatherTabNav slug={location} />
 
       <div className="mx-auto w-full max-w-2xl flex-1 px-4 py-4">{children}</div>
     </main>
