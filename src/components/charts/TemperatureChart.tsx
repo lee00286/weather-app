@@ -66,47 +66,54 @@ export function TemperatureChart({ hours, timezone }: TemperatureChartProps) {
   const ticks = data.filter((d) => d.index % 3 === 0).map((d) => d.index);
 
   return (
-    <div role="img" aria-label="Hourly temperature chart" className="h-[200px] w-full md:h-[280px]">
-      <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={data} margin={{ top: 10, right: 8, left: -16, bottom: 0 }}>
-          <defs>
-            <linearGradient id="tempGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor={CHART_COLORS.tempWarm} stopOpacity={0.6} />
-              <stop offset="100%" stopColor={CHART_COLORS.tempCold} stopOpacity={0.15} />
-            </linearGradient>
-          </defs>
-          <CartesianGrid
-            strokeDasharray="3 3"
-            stroke="currentColor"
-            className="text-gray-200 dark:text-gray-800"
-          />
-          <XAxis
-            dataKey="index"
-            type="number"
-            domain={[0, data.length - 1]}
-            ticks={ticks}
-            tickFormatter={(i: number) => data[i]?.label ?? ''}
-            tick={{ fontSize: 11, fill: 'currentColor' }}
-            stroke="currentColor"
-            className="text-gray-500 dark:text-gray-400"
-          />
-          <YAxis
-            tick={{ fontSize: 11, fill: 'currentColor' }}
-            tickFormatter={(t: number) => `${Math.round(t)}°`}
-            stroke="currentColor"
-            className="text-gray-500 dark:text-gray-400"
-            width={36}
-          />
-          <Tooltip content={<TempTooltip />} />
-          <Area
-            type="monotone"
-            dataKey="temperature"
-            stroke={CHART_COLORS.tempWarm}
-            strokeWidth={2}
-            fill="url(#tempGradient)"
-          />
-        </AreaChart>
-      </ResponsiveContainer>
+    <div className="space-y-2">
+      <h4 className="text-xs font-medium text-gray-500 dark:text-gray-400">Temperature trend</h4>
+      <div
+        role="img"
+        aria-label="Hourly temperature chart"
+        className="h-[200px] w-full md:h-[280px]"
+      >
+        <ResponsiveContainer width="100%" height="100%">
+          <AreaChart data={data} margin={{ top: 10, right: 8, left: 0, bottom: 0 }}>
+            <defs>
+              <linearGradient id="tempGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor={CHART_COLORS.tempWarm} stopOpacity={0.6} />
+                <stop offset="100%" stopColor={CHART_COLORS.tempCold} stopOpacity={0.15} />
+              </linearGradient>
+            </defs>
+            <CartesianGrid
+              strokeDasharray="3 3"
+              stroke="currentColor"
+              className="text-gray-200 dark:text-gray-800"
+            />
+            <XAxis
+              dataKey="index"
+              type="number"
+              domain={[0, data.length - 1]}
+              ticks={ticks}
+              tickFormatter={(i: number) => data[i]?.label ?? ''}
+              tick={{ fontSize: 11, fill: 'currentColor' }}
+              stroke="currentColor"
+              className="text-gray-500 dark:text-gray-400"
+            />
+            <YAxis
+              tick={{ fontSize: 11, fill: 'currentColor' }}
+              tickFormatter={(t: number) => `${Math.round(t)}°`}
+              stroke="currentColor"
+              className="text-gray-500 dark:text-gray-400"
+              width={44}
+            />
+            <Tooltip content={<TempTooltip />} />
+            <Area
+              type="monotone"
+              dataKey="temperature"
+              stroke={CHART_COLORS.tempWarm}
+              strokeWidth={2}
+              fill="url(#tempGradient)"
+            />
+          </AreaChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
 }

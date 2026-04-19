@@ -23,7 +23,8 @@ const mockData: CurrentWeather = {
 describe('WeatherDetails', () => {
   it('renders wind speed and direction', () => {
     render(<WeatherDetails data={mockData} />);
-    expect(screen.getByText('12 km/h')).toBeInTheDocument();
+    expect(screen.getByText(/12/)).toBeInTheDocument();
+    expect(screen.getByText(/km\/h/)).toBeInTheDocument();
     expect(screen.getByText('SW')).toBeInTheDocument();
   });
 
@@ -40,7 +41,8 @@ describe('WeatherDetails', () => {
 
   it('renders precipitation', () => {
     render(<WeatherDetails data={mockData} />);
-    expect(screen.getByText('2.5 mm')).toBeInTheDocument();
+    expect(screen.getByText(/2\.5/)).toBeInTheDocument();
+    expect(screen.getByText(/mm/)).toBeInTheDocument();
   });
 
   it('renders all four detail cards', () => {

@@ -58,41 +58,44 @@ export function PrecipitationChart({ hours, timezone }: PrecipitationChartProps)
   const ticks = data.filter((d) => d.index % 3 === 0).map((d) => d.index);
 
   return (
-    <div
-      role="img"
-      aria-label="Hourly precipitation chart"
-      className="h-[120px] w-full md:h-[160px]"
-    >
-      <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={data} margin={{ top: 8, right: 8, left: -16, bottom: 0 }}>
-          <CartesianGrid
-            strokeDasharray="3 3"
-            stroke="currentColor"
-            className="text-gray-200 dark:text-gray-800"
-          />
-          <XAxis
-            dataKey="index"
-            type="number"
-            domain={[0, data.length - 1]}
-            ticks={ticks}
-            tickFormatter={(i: number) => data[i]?.label ?? ''}
-            tick={{ fontSize: 11, fill: 'currentColor' }}
-            stroke="currentColor"
-            className="text-gray-500 dark:text-gray-400"
-          />
-          <YAxis
-            domain={[0, 100]}
-            ticks={[0, 25, 50, 75, 100]}
-            tickFormatter={(v: number) => `${v}%`}
-            tick={{ fontSize: 11, fill: 'currentColor' }}
-            stroke="currentColor"
-            className="text-gray-500 dark:text-gray-400"
-            width={36}
-          />
-          <Tooltip content={<PrecipTooltip />} cursor={{ fill: 'rgba(96, 165, 250, 0.1)' }} />
-          <Bar dataKey="probability" fill={CHART_COLORS.precipRain} radius={[4, 4, 0, 0]} />
-        </BarChart>
-      </ResponsiveContainer>
+    <div className="space-y-2">
+      <h4 className="text-xs font-medium text-gray-500 dark:text-gray-400">Precipitation chance</h4>
+      <div
+        role="img"
+        aria-label="Hourly precipitation chart"
+        className="h-[120px] w-full md:h-[160px]"
+      >
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
+            <CartesianGrid
+              strokeDasharray="3 3"
+              stroke="currentColor"
+              className="text-gray-200 dark:text-gray-800"
+            />
+            <XAxis
+              dataKey="index"
+              type="number"
+              domain={[0, data.length - 1]}
+              ticks={ticks}
+              tickFormatter={(i: number) => data[i]?.label ?? ''}
+              tick={{ fontSize: 11, fill: 'currentColor' }}
+              stroke="currentColor"
+              className="text-gray-500 dark:text-gray-400"
+            />
+            <YAxis
+              domain={[0, 100]}
+              ticks={[0, 25, 50, 75, 100]}
+              tickFormatter={(v: number) => `${v}%`}
+              tick={{ fontSize: 11, fill: 'currentColor' }}
+              stroke="currentColor"
+              className="text-gray-500 dark:text-gray-400"
+              width={44}
+            />
+            <Tooltip content={<PrecipTooltip />} cursor={{ fill: 'rgba(96, 165, 250, 0.1)' }} />
+            <Bar dataKey="probability" fill={CHART_COLORS.precipRain} radius={[4, 4, 0, 0]} />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
 }

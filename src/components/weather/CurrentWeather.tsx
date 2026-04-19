@@ -5,7 +5,10 @@ export function CurrentWeather({ data }: { data: CurrentWeatherData; timezone: s
   const { label, icon } = getWeatherInfo(data.weatherCode);
 
   return (
-    <section aria-label="Current weather" className="flex flex-col items-center py-6">
+    <section
+      aria-label="Current weather"
+      className="flex flex-col items-center py-2 text-center sm:py-6"
+    >
       <div className="mb-1 flex items-center gap-2 text-base text-gray-600 dark:text-gray-300">
         <span aria-hidden="true">{getIconEmoji(icon)}</span>
         <span>{label}</span>

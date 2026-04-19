@@ -90,12 +90,14 @@ export default function DailyDashboard() {
     <div className="space-y-4">
       {alerts && alerts.length > 0 && <AlertBanner alerts={alerts} />}
 
-      <CurrentWeather data={data.current} timezone={data.timezone} />
+      <div className="grid items-center gap-4 sm:grid-cols-2">
+        <CurrentWeather data={data.current} timezone={data.timezone} />
+        <WeatherDetails data={data.current} />
+      </div>
 
       {notices.length > 0 && <NoticeCard notices={notices} />}
 
       <HourlyForecast hourlyData={data.hourly} dailyData={data.daily} timezone={data.timezone} />
-      <WeatherDetails data={data.current} />
     </div>
   );
 }

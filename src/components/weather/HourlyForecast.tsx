@@ -18,6 +18,7 @@ interface HourlyForecastProps {
 export function HourlyForecast({ hourlyData, dailyData, timezone }: HourlyForecastProps) {
   const todayIso = DateTime.now().setZone(timezone).toISODate()!;
   const [selectedDate, setSelectedDate] = useState<string>(todayIso);
+  const [showCalendar, setShowCalendar] = useState(false);
 
   const selectedHours = useMemo(
     () =>
@@ -32,8 +33,36 @@ export function HourlyForecast({ hourlyData, dailyData, timezone }: HourlyForeca
     ? 'Today, hourly'
     : DateTime.fromISO(selectedDate, { zone: timezone }).toFormat('cccc, LLLL d');
 
+  const handleSelectDate = (date: string) => {
+    setSelectedDate(date);
+    setShowCalendar(false);
+  };
+
   return (
     <section aria-label="Hourly forecast" className="space-y-4">
+      <div className="flex justify-end">
+        <button
+          type="button"
+          onClick={() => setShowCalendar((s) => !s)}
+          aria-expanded={showCalendar}
+          aria-controls="hourly-calendar"
+          className="rounded-full px-3 py-1 text-xs font-medium text-blue-600 transition-colors hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-blue-900/30"
+        >
+          {showCalendar ? 'Hide calendar' : 'Pick a date'}
+        </button>
+      </div>
+
+      {showCalendar && (
+        <div id="hourly-calendar">
+          <HourlyCalendar
+            dailyData={dailyData}
+            selectedDate={selectedDate}
+            todayIso={todayIso}
+            onSelectDate={handleSelectDate}
+          />
+        </div>
+      )}
+
       <div>
         <h3 className="mb-2 text-xs font-medium text-gray-500 dark:text-gray-400">{heading}</h3>
         <HourlyStrip hours={selectedHours} timezone={timezone} isToday={isToday} />
@@ -45,13 +74,6 @@ export function HourlyForecast({ hourlyData, dailyData, timezone }: HourlyForeca
           <PrecipitationChart hours={selectedHours} timezone={timezone} />
         </>
       )}
-
-      <HourlyCalendar
-        dailyData={dailyData}
-        selectedDate={selectedDate}
-        todayIso={todayIso}
-        onSelectDate={setSelectedDate}
-      />
     </section>
   );
 }

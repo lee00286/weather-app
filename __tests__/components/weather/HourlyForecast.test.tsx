@@ -59,10 +59,13 @@ describe('HourlyForecast', () => {
     expect(screen.getByText('Now')).toBeInTheDocument();
   });
 
-  it('renders calendar with daily high/low temps', () => {
+  it('renders calendar with daily high/low temps when opened', async () => {
     const hourly = makeHourly('2024-06-15', 24);
     const daily = makeDaily(['2024-06-15']);
     render(<HourlyForecast hourlyData={hourly} dailyData={daily} timezone="UTC" />);
+
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
+    await user.click(screen.getByRole('button', { name: /Pick a date/ }));
 
     expect(screen.getByText('22°/12°')).toBeInTheDocument();
   });
@@ -72,9 +75,9 @@ describe('HourlyForecast', () => {
     const daily = makeDaily(['2024-06-15', '2024-06-16']);
     render(<HourlyForecast hourlyData={hourly} dailyData={daily} timezone="UTC" />);
 
-    await userEvent
-      .setup({ advanceTimers: jest.advanceTimersByTime })
-      .click(screen.getByText('16'));
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
+    await user.click(screen.getByRole('button', { name: /Pick a date/ }));
+    await user.click(screen.getByText('16'));
 
     expect(screen.getByText(/Sunday, June 16/)).toBeInTheDocument();
     expect(screen.queryByText('Now')).not.toBeInTheDocument();
@@ -94,9 +97,9 @@ describe('HourlyForecast', () => {
     const daily = makeDaily(['2024-06-15', '2024-06-20']);
     render(<HourlyForecast hourlyData={hourly} dailyData={daily} timezone="UTC" />);
 
-    await userEvent
-      .setup({ advanceTimers: jest.advanceTimersByTime })
-      .click(screen.getByText('20'));
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
+    await user.click(screen.getByRole('button', { name: /Pick a date/ }));
+    await user.click(screen.getByText('20'));
 
     expect(screen.queryByLabelText('Hourly temperature chart')).not.toBeInTheDocument();
     expect(screen.queryByLabelText('Hourly precipitation chart')).not.toBeInTheDocument();
