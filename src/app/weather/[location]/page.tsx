@@ -6,7 +6,7 @@ import { useMemo } from 'react';
 
 import { AlertBanner } from '@/components/weather/AlertBanner';
 import { CurrentWeather } from '@/components/weather/CurrentWeather';
-import { HourlyStrip } from '@/components/weather/HourlyStrip';
+import { HourlyForecast } from '@/components/weather/HourlyForecast';
 import { NoticeCard } from '@/components/weather/NoticeCard';
 import { WeatherDetails } from '@/components/weather/WeatherDetails';
 import { useAlerts } from '@/hooks/useAlerts';
@@ -94,7 +94,7 @@ export default function DailyDashboard() {
 
       {notices.length > 0 && <NoticeCard notices={notices} />}
 
-      <HourlyStrip hourlyData={data.hourly} dailyData={data.daily} timezone={data.timezone} />
+      <HourlyForecast hourlyData={data.hourly} dailyData={data.daily} timezone={data.timezone} />
       <WeatherDetails data={data.current} />
     </div>
   );
