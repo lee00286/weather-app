@@ -5,7 +5,16 @@ export function formatHourlyTime(isoString: string, timezone: string): string {
 }
 
 export function getWindDirection(degrees: number): string {
-  const directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+  const directions = [
+    'North',
+    'Northeast',
+    'East',
+    'Southeast',
+    'South',
+    'Southwest',
+    'West',
+    'Northwest',
+  ];
   const index = Math.round(degrees / 45) % 8;
   return directions[index];
 }

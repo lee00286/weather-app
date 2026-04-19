@@ -67,7 +67,7 @@ export function HourlyCalendar({
   };
 
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white/80 p-3 shadow-sm backdrop-blur dark:border-gray-800 dark:bg-gray-900/80">
+    <div className="rounded-2xl border border-gray-200 bg-white/80 p-3 shadow backdrop-blur dark:border-gray-800 dark:bg-gray-900/80">
       <div className="mb-3 flex items-center justify-between">
         <button
           type="button"

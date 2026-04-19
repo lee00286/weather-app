@@ -26,47 +26,45 @@ describe('formatHourlyTime', () => {
 });
 
 describe('getWindDirection', () => {
-  it('returns N for 0 degrees', () => {
-    expect(getWindDirection(0)).toBe('N');
+  it('returns North for 0 degrees', () => {
+    expect(getWindDirection(0)).toBe('North');
   });
 
-  it('returns NE for 45 degrees', () => {
-    expect(getWindDirection(45)).toBe('NE');
+  it('returns Northeast for 45 degrees', () => {
+    expect(getWindDirection(45)).toBe('Northeast');
   });
 
-  it('returns E for 90 degrees', () => {
-    expect(getWindDirection(90)).toBe('E');
+  it('returns East for 90 degrees', () => {
+    expect(getWindDirection(90)).toBe('East');
   });
 
-  it('returns SE for 135 degrees', () => {
-    expect(getWindDirection(135)).toBe('SE');
+  it('returns Southeast for 135 degrees', () => {
+    expect(getWindDirection(135)).toBe('Southeast');
   });
 
-  it('returns S for 180 degrees', () => {
-    expect(getWindDirection(180)).toBe('S');
+  it('returns South for 180 degrees', () => {
+    expect(getWindDirection(180)).toBe('South');
   });
 
-  it('returns SW for 225 degrees', () => {
-    expect(getWindDirection(225)).toBe('SW');
+  it('returns Southwest for 225 degrees', () => {
+    expect(getWindDirection(225)).toBe('Southwest');
   });
 
-  it('returns W for 270 degrees', () => {
-    expect(getWindDirection(270)).toBe('W');
+  it('returns West for 270 degrees', () => {
+    expect(getWindDirection(270)).toBe('West');
   });
 
-  it('returns NW for 315 degrees', () => {
-    expect(getWindDirection(315)).toBe('NW');
+  it('returns Northwest for 315 degrees', () => {
+    expect(getWindDirection(315)).toBe('Northwest');
   });
 
-  it('returns N for 360 degrees', () => {
-    expect(getWindDirection(360)).toBe('N');
+  it('returns North for 360 degrees', () => {
+    expect(getWindDirection(360)).toBe('North');
   });
 
   it('rounds to nearest direction for boundary values', () => {
-    // 22 degrees is closer to N (0) than NE (45)
-    expect(getWindDirection(22)).toBe('N');
-    // 23 degrees is closer to NE (45) than N (0)
-    expect(getWindDirection(23)).toBe('NE');
+    expect(getWindDirection(22)).toBe('North');
+    expect(getWindDirection(23)).toBe('Northeast');
   });
 });
 

@@ -25,7 +25,7 @@ describe('WeatherDetails', () => {
     render(<WeatherDetails data={mockData} />);
     expect(screen.getByText(/12/)).toBeInTheDocument();
     expect(screen.getByText(/km\/h/)).toBeInTheDocument();
-    expect(screen.getByText('SW')).toBeInTheDocument();
+    expect(screen.getByText('Southwest')).toBeInTheDocument();
   });
 
   it('renders humidity percentage', () => {

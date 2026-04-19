@@ -101,7 +101,7 @@ export function TemperatureChart({ hours, timezone }: TemperatureChartProps) {
               tickFormatter={(t: number) => `${Math.round(t)}°`}
               stroke="currentColor"
               className="text-gray-500 dark:text-gray-400"
-              width={44}
+              width={32}
             />
             <Tooltip content={<TempTooltip />} />
             <Area
