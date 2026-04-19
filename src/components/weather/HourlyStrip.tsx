@@ -110,10 +110,11 @@ export function HourlyStrip({ hourlyData, dailyData, timezone }: HourlyCalendarP
             className="flex gap-4 overflow-x-auto py-2"
             style={{ scrollSnapType: 'x mandatory' }}
           >
-            {selectedHours.map((hour, i) => {
+            {selectedHours.map((hour) => {
               const { icon } = getWeatherInfo(hour.weatherCode);
               const hourNum = DateTime.fromISO(hour.time, { zone: timezone }).hour;
               const isNow = selectedDate === todayIso && hourNum === currentHour;
+
               return (
                 <div
                   key={hour.time}
@@ -188,7 +189,7 @@ export function HourlyStrip({ hourlyData, dailyData, timezone }: HourlyCalendarP
         </div>
 
         {/* Day cells */}
-        <div className="grid grid-cols-7">
+        <div className="grid grid-cols-7 gap-1">
           {monthDays.map((day, i) => {
             if (day === null) {
               return <div key={`empty-${i}`} />;
@@ -206,8 +207,10 @@ export function HourlyStrip({ hourlyData, dailyData, timezone }: HourlyCalendarP
                 onClick={() => setSelectedDate(dateStr)}
                 className={`flex flex-col items-center rounded-lg py-1 text-center transition-colors ${
                   isSelected
-                    ? 'bg-blue-50 ring-1 ring-blue-500 dark:bg-blue-900/30 dark:ring-blue-400'
-                    : 'hover:bg-gray-50 dark:hover:bg-gray-800'
+                    ? 'bg-blue-50 ring-1 ring-inset ring-blue-500 dark:bg-blue-900/30 dark:ring-blue-400'
+                    : isToday
+                      ? 'ring-1 ring-inset ring-blue-300 hover:bg-blue-50/50 dark:ring-blue-600 dark:hover:bg-blue-900/20'
+                      : 'hover:bg-gray-50 dark:hover:bg-gray-800'
                 }`}
               >
                 <span

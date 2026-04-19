@@ -1,14 +1,26 @@
 'use client';
 
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
+import { useMemo } from 'react';
 
+import { AlertBanner } from '@/components/weather/AlertBanner';
 import { CurrentWeather } from '@/components/weather/CurrentWeather';
 import { HourlyStrip } from '@/components/weather/HourlyStrip';
+import { NoticeCard } from '@/components/weather/NoticeCard';
 import { WeatherDetails } from '@/components/weather/WeatherDetails';
+import { useAlerts } from '@/hooks/useAlerts';
 import { useWeather } from '@/hooks/useWeather';
+import { getSeasonalNotices } from '@/lib/seasonalNotices';
+
+function decodeSlug(slug: string): string {
+  return decodeURIComponent(slug)
+    .replace(/-/g, ' ')
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+}
 
 export default function DailyDashboard() {
+  const params = useParams<{ location: string }>();
   const searchParams = useSearchParams();
   const lat = searchParams.get('lat') ?? '';
   const lon = searchParams.get('lon') ?? '';
@@ -23,7 +35,24 @@ export default function DailyDashboard() {
     parsedLon >= -180 &&
     parsedLon <= 180;
 
-  const { data, isLoading, error } = useWeather(isValidCoords ? lat : '', isValidCoords ? lon : '');
+  const validLat = isValidCoords ? lat : '';
+  const validLon = isValidCoords ? lon : '';
+
+  const { data, isLoading, error } = useWeather(validLat, validLon);
+  const { data: alerts } = useAlerts(validLat, validLon);
+
+  const locationName = decodeSlug(params.location ?? '');
+
+  const temperature = data?.current.temperature;
+  const uvIndex = data?.current.uvIndex;
+
+  const notices = useMemo(() => {
+    if (temperature === undefined || uvIndex === undefined) {
+      return [];
+    }
+
+    return getSeasonalNotices(locationName, { temperature, uvIndex }, new Date());
+  }, [temperature, uvIndex, locationName]);
 
   if (!isValidCoords) {
     return (
@@ -59,7 +88,12 @@ export default function DailyDashboard() {
 
   return (
     <div className="space-y-4">
+      {alerts && alerts.length > 0 && <AlertBanner alerts={alerts} />}
+
       <CurrentWeather data={data.current} timezone={data.timezone} />
+
+      {notices.length > 0 && <NoticeCard notices={notices} />}
+
       <HourlyStrip hourlyData={data.hourly} dailyData={data.daily} timezone={data.timezone} />
       <WeatherDetails data={data.current} />
     </div>

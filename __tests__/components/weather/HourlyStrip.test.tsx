@@ -8,7 +8,6 @@ import type { DailyForecast, HourlyForecast } from '@/lib/types';
 
 // Use a fixed "today" for all tests
 const TODAY = '2024-06-15';
-const TOMORROW = '2024-06-16';
 
 function makeHourly(date: string, hours: number): HourlyForecast[] {
   return Array.from({ length: hours }, (_, i) => ({
