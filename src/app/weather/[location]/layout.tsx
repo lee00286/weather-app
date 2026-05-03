@@ -1,5 +1,6 @@
 import Link from 'next/link';
 
+import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { WeatherTabNav } from '@/components/ui/WeatherTabNav';
 
 function decodeSlug(slug: string): string {
@@ -32,6 +33,7 @@ export default async function WeatherLayout({
           <h1 className="flex-1 truncate text-lg font-medium text-gray-900 dark:text-gray-50">
             {locationName}
           </h1>
+          <ThemeToggle />
         </div>
       </header>
 

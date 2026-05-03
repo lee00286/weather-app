@@ -6,6 +6,7 @@ import { useSearchParams } from 'next/navigation';
 import { WeeklyPrecipitationChart } from '@/components/charts/WeeklyPrecipitationChart';
 import { WeeklyRangeChart } from '@/components/charts/WeeklyRangeChart';
 import { Card } from '@/components/ui/Card';
+import { Skeleton } from '@/components/ui/Skeleton';
 import { WeeklyList } from '@/components/weather/WeeklyList';
 import { useWeather } from '@/hooks/useWeather';
 
@@ -78,16 +79,17 @@ export default function WeeklyForecast() {
 
 function WeeklySkeleton() {
   return (
-    <div className="space-y-4">
+    <div className="space-y-4" role="status" aria-label="Loading weekly forecast">
+      <span className="sr-only">Loading weekly forecast…</span>
       <div className="rounded-2xl bg-white/80 p-4 shadow backdrop-blur dark:bg-gray-900/80">
         <div className="space-y-2">
           {Array.from({ length: 7 }).map((_, i) => (
-            <div key={i} className="h-10 animate-pulse rounded bg-gray-200 dark:bg-gray-800" />
+            <Skeleton key={i} className="h-10" />
           ))}
         </div>
       </div>
-      <div className="h-[240px] animate-pulse rounded-2xl bg-gray-200 dark:bg-gray-800" />
-      <div className="h-[160px] animate-pulse rounded-2xl bg-gray-200 dark:bg-gray-800" />
+      <Skeleton className="h-[240px] rounded-2xl" />
+      <Skeleton className="h-[160px] rounded-2xl" />
     </div>
   );
 }

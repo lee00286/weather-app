@@ -4,6 +4,11 @@ import Link from 'next/link';
 import { useParams, useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
 
+import {
+  CurrentWeatherSkeleton,
+  HourlyForecastSkeleton,
+  WeatherDetailsSkeleton,
+} from '@/components/ui/Skeleton';
 import { AlertBanner } from '@/components/weather/AlertBanner';
 import { CurrentWeather } from '@/components/weather/CurrentWeather';
 import { HourlyForecast } from '@/components/weather/HourlyForecast';
@@ -69,7 +74,15 @@ export default function DailyDashboard() {
   }
 
   if (isLoading) {
-    return <DashboardSkeleton />;
+    return (
+      <div className="space-y-4">
+        <div className="grid items-center gap-4 sm:grid-cols-2">
+          <CurrentWeatherSkeleton />
+          <WeatherDetailsSkeleton />
+        </div>
+        <HourlyForecastSkeleton />
+      </div>
+    );
   }
 
   if (error || !data) {
@@ -98,33 +111,6 @@ export default function DailyDashboard() {
       {notices.length > 0 && <NoticeCard notices={notices} />}
 
       <HourlyForecast hourlyData={data.hourly} dailyData={data.daily} timezone={data.timezone} />
-    </div>
-  );
-}
-
-function DashboardSkeleton() {
-  return (
-    <div className="space-y-4">
-      <div className="flex flex-col items-center py-6">
-        <div className="mb-2 h-5 w-32 animate-pulse rounded bg-gray-200 dark:bg-gray-800" />
-        <div className="h-16 w-24 animate-pulse rounded bg-gray-200 dark:bg-gray-800" />
-        <div className="mt-2 h-4 w-28 animate-pulse rounded bg-gray-200 dark:bg-gray-800" />
-        <div className="mt-1 h-4 w-36 animate-pulse rounded bg-gray-200 dark:bg-gray-800" />
-      </div>
-      <div className="flex gap-4 overflow-hidden">
-        {Array.from({ length: 6 }).map((_, i) => (
-          <div key={i} className="flex shrink-0 flex-col items-center gap-1 px-2">
-            <div className="h-4 w-10 animate-pulse rounded bg-gray-200 dark:bg-gray-800" />
-            <div className="h-6 w-6 animate-pulse rounded-full bg-gray-200 dark:bg-gray-800" />
-            <div className="h-4 w-8 animate-pulse rounded bg-gray-200 dark:bg-gray-800" />
-          </div>
-        ))}
-      </div>
-      <div className="grid grid-cols-2 gap-3">
-        {Array.from({ length: 4 }).map((_, i) => (
-          <div key={i} className="h-24 animate-pulse rounded-2xl bg-gray-200 dark:bg-gray-800" />
-        ))}
-      </div>
     </div>
   );
 }

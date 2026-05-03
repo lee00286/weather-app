@@ -6,6 +6,7 @@ import { useSearchParams } from 'next/navigation';
 
 import { MonthlyTrendChart } from '@/components/charts/MonthlyTrendChart';
 import { Card } from '@/components/ui/Card';
+import { Skeleton } from '@/components/ui/Skeleton';
 import { useMonthlyWeather } from '@/hooks/useMonthlyWeather';
 import { useWeather } from '@/hooks/useWeather';
 import { stitchMonthlyData } from '@/lib/monthlyStitch';
@@ -87,8 +88,9 @@ export default function MonthlyForecast() {
 
 function MonthlySkeleton() {
   return (
-    <div className="space-y-4">
-      <div className="h-[280px] animate-pulse rounded-2xl bg-gray-200 dark:bg-gray-800" />
+    <div className="space-y-4" role="status" aria-label="Loading monthly trend">
+      <span className="sr-only">Loading monthly trend…</span>
+      <Skeleton className="h-[280px] rounded-2xl" />
     </div>
   );
 }

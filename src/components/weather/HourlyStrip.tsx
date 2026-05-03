@@ -22,6 +22,8 @@ export function HourlyStrip({ hours, timezone, isToday }: HourlyStripProps) {
   useEffect(() => {
     if (isToday && nowRef.current) {
       nowRef.current.scrollIntoView({ inline: 'center', block: 'nearest' });
+    } else if (!isToday && scrollRef.current) {
+      scrollRef.current.scrollLeft = 0;
     }
   }, [isToday, hours]);
 
