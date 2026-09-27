@@ -65,8 +65,8 @@ export function PostalCodeSearch() {
 
   return (
     <div className="w-full max-w-lg">
-      <div className="flex gap-2">
-        <div className="relative">
+      <div className="flex flex-col gap-2">
+        <div className="relative w-full">
           <label htmlFor="postal-country" className="sr-only">
             Country
           </label>
@@ -74,7 +74,7 @@ export function PostalCodeSearch() {
             id="postal-country"
             value={country}
             onChange={handleCountryChange}
-            className={`${fieldBase} appearance-none pl-4 pr-10`}
+            className={`${fieldBase} appearance-none pl-4 pr-10 w-full`}
           >
             {SUPPORTED_COUNTRIES.map((c) => (
               <option key={c.code} value={c.code}>
@@ -96,30 +96,32 @@ export function PostalCodeSearch() {
           </svg>
         </div>
 
-        <label htmlFor="postal-code" className="sr-only">
-          Postal code
-        </label>
-        <input
-          id="postal-code"
-          type="text"
-          inputMode="numeric"
-          autoComplete="postal-code"
-          placeholder="Postal code"
-          maxLength={12}
-          value={postal}
-          onChange={handlePostalChange}
-          onKeyDown={handleKeyDown}
-          className={`flex-1 ${fieldBase} px-4`}
-        />
+        <div className="flex gap-2">
+          <label htmlFor="postal-code" className="sr-only">
+            Postal code
+          </label>
+          <input
+            id="postal-code"
+            type="text"
+            inputMode="numeric"
+            autoComplete="postal-code"
+            placeholder="Postal code"
+            maxLength={12}
+            value={postal}
+            onChange={handlePostalChange}
+            onKeyDown={handleKeyDown}
+            className={`flex-1 ${fieldBase} px-4`}
+          />
 
-        <button
-          type="button"
-          onClick={lookup}
-          disabled={status === 'loading'}
-          className="rounded-xl bg-blue-600 px-5 py-3 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus-visible:ring-blue-400"
-        >
-          Go
-        </button>
+          <button
+            type="button"
+            onClick={lookup}
+            disabled={status === 'loading'}
+            className="rounded-xl bg-blue-600 px-5 py-3 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus-visible:ring-blue-400"
+          >
+            Go
+          </button>
+        </div>
       </div>
 
       {status !== 'idle' && (
