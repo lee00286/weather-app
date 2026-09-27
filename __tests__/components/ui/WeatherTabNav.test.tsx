@@ -86,4 +86,20 @@ describe('WeatherTabNav', () => {
     render(<WeatherTabNav slug="toronto" />);
     expect(screen.getByRole('link', { name: 'Weekly' })).toHaveAttribute('aria-current', 'page');
   });
+
+  it('renders the Can I Run? tab pointing at /running with preserved query', () => {
+    mockUsePathname.mockReturnValue('/weather/toronto/running');
+    render(<WeatherTabNav slug="toronto" />);
+    const link = screen.getByRole('link', { name: 'Can I Run?' });
+    expect(link).toHaveAttribute('href', '/weather/toronto/running?lat=43.65&lon=-79.38');
+  });
+
+  it('marks the running tab active on the running route', () => {
+    mockUsePathname.mockReturnValue('/weather/toronto/running');
+    render(<WeatherTabNav slug="toronto" />);
+    expect(screen.getByRole('link', { name: 'Can I Run?' })).toHaveAttribute(
+      'aria-current',
+      'page',
+    );
+  });
 });

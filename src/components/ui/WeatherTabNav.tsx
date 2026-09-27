@@ -11,6 +11,7 @@ const TABS = [
   { key: 'daily', label: 'Daily', suffix: '' },
   { key: 'weekly', label: 'Weekly', suffix: '/weekly' },
   { key: 'monthly', label: 'Monthly', suffix: '/monthly' },
+  { key: 'running', label: 'Can I Run?', suffix: '/running' },
 ] as const;
 
 function isActive(pathname: string, basePath: string, suffix: string): boolean {

@@ -78,4 +78,49 @@ describe('AlertBanner', () => {
 
     expect(screen.queryByText('Dismiss me')).not.toBeInTheDocument();
   });
+
+  it('renders alerts with identical headlines as separate banners', () => {
+    render(
+      <AlertBanner
+        alerts={[
+          makeAlert({ headline: 'Squall Watch', description: 'First details.' }),
+          makeAlert({ headline: 'Squall Watch', description: 'Second details.' }),
+        ]}
+      />,
+    );
+    expect(screen.getAllByText('Squall Watch')).toHaveLength(2);
+  });
+
+  it('expands only the clicked duplicate, not its same-headline sibling', async () => {
+    const user = userEvent.setup();
+    render(
+      <AlertBanner
+        alerts={[
+          makeAlert({ headline: 'Squall Watch', description: 'First details.' }),
+          makeAlert({ headline: 'Squall Watch', description: 'Second details.' }),
+        ]}
+      />,
+    );
+
+    await user.click(screen.getAllByText('Squall Watch')[0]);
+
+    expect(screen.getByText('First details.')).toBeInTheDocument();
+    expect(screen.queryByText('Second details.')).not.toBeInTheDocument();
+  });
+
+  it('dismisses only the clicked duplicate, not its same-headline sibling', async () => {
+    const user = userEvent.setup();
+    render(
+      <AlertBanner
+        alerts={[
+          makeAlert({ headline: 'Squall Watch', description: 'First details.' }),
+          makeAlert({ headline: 'Squall Watch', description: 'Second details.' }),
+        ]}
+      />,
+    );
+
+    await user.click(screen.getAllByLabelText('Dismiss alert: Squall Watch')[0]);
+
+    expect(screen.getAllByText('Squall Watch')).toHaveLength(1);
+  });
 });

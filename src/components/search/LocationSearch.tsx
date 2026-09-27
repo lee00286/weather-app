@@ -1,14 +1,13 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
 
+import { PostalCodeSearch } from '@/components/search/PostalCodeSearch';
 import { useLocationSearch } from '@/hooks/useLocationSearch';
-import { generateSlug } from '@/lib/slug';
-import type { LocationSearchResult } from '@/lib/types';
+import { useNavigateToLocation } from '@/hooks/useNavigateToLocation';
 
 export function LocationSearch() {
-  const router = useRouter();
+  const navigateToResult = useNavigateToLocation();
   const [inputValue, setInputValue] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -22,18 +21,6 @@ export function LocationSearch() {
       setSearchQuery(trimmed);
     }
   }, [inputValue]);
-
-  const navigateToResult = useCallback(
-    (result: LocationSearchResult) => {
-      const slug = generateSlug(result.name, result.region, result.country);
-      const params = new URLSearchParams({
-        lat: String(result.lat),
-        lon: String(result.lon),
-      });
-      router.push(`/weather/${slug}?${params.toString()}`);
-    },
-    [router],
-  );
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -63,7 +50,7 @@ export function LocationSearch() {
         <input
           id="location-search"
           type="text"
-          placeholder="Search city or postal code"
+          placeholder="Search city"
           maxLength={200}
           value={inputValue}
           onChange={handleInputChange}
@@ -118,6 +105,17 @@ export function LocationSearch() {
             ))}
         </ul>
       )}
+
+      <div className="mt-6">
+        <div className="mb-4 flex items-center gap-3" aria-hidden="true">
+          <span className="h-px flex-1 bg-gray-200 dark:bg-gray-700" />
+          <span className="text-xs uppercase tracking-wide text-gray-400 dark:text-gray-500">
+            or enter a postal code
+          </span>
+          <span className="h-px flex-1 bg-gray-200 dark:bg-gray-700" />
+        </div>
+        <PostalCodeSearch />
+      </div>
     </div>
   );
 }

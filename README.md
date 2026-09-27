@@ -49,6 +49,15 @@ Weather data provided by Open-Meteo. Open-Meteo offers free weather forecast API
 
 Location search and weather alerts powered by WeatherAPI.com.
 
+## Rate Limiting
+
+Both upstream APIs are free-tier with daily quotas (Open-Meteo ~10k/day, WeatherAPI.com ~33k/day). To keep a single client from burning through those quotas, abuse protection is handled at the hosting layer instead of in application code:
+
+- **CDN cache headers** on every `/api/*` route (`s-maxage` 5 min – 24 hr) absorb repeat requests for the same parameters at Vercel's edge before they reach the upstream APIs.
+- **Vercel Firewall** enforces a per-IP request cap on `/api/*`. Configured in the Vercel dashboard under **Project → Settings → Firewall → Rate Limiting**. Current rule: path `/api/*`, 30 requests/minute/IP, action: deny (429).
+
+This keeps the codebase free of rate-limit middleware and external dependencies (Redis, etc.) while still protecting the upstream quotas. If quota exhaustion ever becomes a real problem, switch to per-IP middleware backed by Upstash Redis.
+
 ## License
 
 This project is for personal/educational use.

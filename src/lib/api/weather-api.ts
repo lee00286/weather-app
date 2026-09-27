@@ -91,7 +91,7 @@ export async function fetchAlerts(lat: number, lon: number): Promise<WeatherAler
 
     const rawAlerts = data?.alerts?.alert ?? [];
 
-    return rawAlerts.map((alert) => ({
+    const mapped: WeatherAlert[] = rawAlerts.map((alert) => ({
       headline: alert.headline,
       severity: validSeverities.has(alert.severity as WeatherAlert['severity'])
         ? (alert.severity as WeatherAlert['severity'])
@@ -101,6 +101,15 @@ export async function fetchAlerts(lat: number, lon: number): Promise<WeatherAler
       effective: alert.effective,
       expires: alert.expires,
     }));
+
+    // WeatherAPI sometimes returns exact-duplicate alerts; drop identical ones.
+    const seen = new Set<string>();
+    return mapped.filter((a) => {
+      const key = `${a.headline}|${a.event}|${a.effective}|${a.expires}|${a.description}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
   } finally {
     clearTimeout(timeoutId);
   }

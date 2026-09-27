@@ -84,7 +84,7 @@ describe('LocationSearch', () => {
   it('renders input with placeholder and search button', () => {
     render(<LocationSearch />, { wrapper: createWrapper() });
 
-    expect(screen.getByPlaceholderText('Search city or postal code')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Search city')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Search' })).toBeInTheDocument();
   });
 
@@ -93,7 +93,7 @@ describe('LocationSearch', () => {
 
     render(<LocationSearch />, { wrapper: createWrapper() });
 
-    const input = screen.getByPlaceholderText('Search city or postal code');
+    const input = screen.getByPlaceholderText('Search city');
     const button = screen.getByRole('button', { name: 'Search' });
 
     await userEvent.type(input, 'Toronto');
@@ -112,7 +112,7 @@ describe('LocationSearch', () => {
 
     render(<LocationSearch />, { wrapper: createWrapper() });
 
-    const input = screen.getByPlaceholderText('Search city or postal code');
+    const input = screen.getByPlaceholderText('Search city');
     await userEvent.type(input, 'Toronto{Enter}');
 
     await waitFor(() => {
@@ -125,7 +125,7 @@ describe('LocationSearch', () => {
 
     render(<LocationSearch />, { wrapper: createWrapper() });
 
-    const input = screen.getByPlaceholderText('Search city or postal code');
+    const input = screen.getByPlaceholderText('Search city');
     await userEvent.type(input, 'asdfghjkl{Enter}');
 
     await waitFor(() => {
@@ -138,7 +138,7 @@ describe('LocationSearch', () => {
 
     render(<LocationSearch />, { wrapper: createWrapper() });
 
-    const input = screen.getByPlaceholderText('Search city or postal code');
+    const input = screen.getByPlaceholderText('Search city');
     await userEvent.type(input, 'Toronto{Enter}');
 
     await waitFor(() => {
@@ -151,7 +151,7 @@ describe('LocationSearch', () => {
 
     render(<LocationSearch />, { wrapper: createWrapper() });
 
-    const input = screen.getByPlaceholderText('Search city or postal code');
+    const input = screen.getByPlaceholderText('Search city');
     await userEvent.type(input, 'Tor{Enter}');
 
     await waitFor(() => {
@@ -170,14 +170,14 @@ describe('LocationSearch', () => {
   it('respects 200 char max length', () => {
     render(<LocationSearch />, { wrapper: createWrapper() });
 
-    const input = screen.getByPlaceholderText('Search city or postal code');
+    const input = screen.getByPlaceholderText('Search city');
     expect(input).toHaveAttribute('maxLength', '200');
   });
 
   it('does NOT auto-search on typing (no fetch until button click or Enter)', async () => {
     render(<LocationSearch />, { wrapper: createWrapper() });
 
-    const input = screen.getByPlaceholderText('Search city or postal code');
+    const input = screen.getByPlaceholderText('Search city');
     await userEvent.type(input, 'Toronto');
 
     // No fetch should have been called — search only triggers on explicit action
@@ -189,7 +189,7 @@ describe('LocationSearch', () => {
 
     render(<LocationSearch />, { wrapper: createWrapper() });
 
-    const input = screen.getByPlaceholderText('Search city or postal code');
+    const input = screen.getByPlaceholderText('Search city');
     await userEvent.type(input, 'Toronto{Enter}');
 
     await waitFor(() => {

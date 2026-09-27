@@ -4,6 +4,10 @@ export function formatHourlyTime(isoString: string, timezone: string): string {
   return DateTime.fromISO(isoString, { zone: timezone }).toFormat('h a');
 }
 
+export function formatHourlyDate(isoString: string, timezone: string): string {
+  return DateTime.fromISO(isoString, { zone: timezone }).toFormat('ccc d');
+}
+
 export function getWindDirection(degrees: number): string {
   const directions = [
     'North',

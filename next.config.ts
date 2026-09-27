@@ -14,7 +14,7 @@ const csp = [
   "default-src 'self'",
   scriptSrc,
   "style-src 'self' 'unsafe-inline'",
-  "connect-src 'self' https://api.open-meteo.com https://archive-api.open-meteo.com https://api.weatherapi.com",
+  "connect-src 'self' https://api.open-meteo.com https://archive-api.open-meteo.com https://air-quality-api.open-meteo.com https://api.weatherapi.com",
   "img-src 'self' data:",
   "font-src 'self' data:",
   "base-uri 'self'",

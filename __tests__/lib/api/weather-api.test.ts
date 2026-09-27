@@ -224,6 +224,49 @@ describe('fetchAlerts', () => {
     expect(alerts[0].severity).toBe('Minor');
   });
 
+  it('drops exact-duplicate alerts', async () => {
+    const dup = {
+      headline: 'Squall Watch In Effect',
+      severity: 'Moderate',
+      event: 'Squall Watch',
+      desc: 'Thunderstorms redeveloping this afternoon.',
+      effective: '2026-04-04T12:00:00Z',
+      expires: '2026-04-05T06:00:00Z',
+    };
+    mockResponse({ alerts: { alert: [dup, { ...dup }] } });
+
+    const alerts = await fetchAlerts(43.65, -79.38);
+    expect(alerts).toHaveLength(1);
+  });
+
+  it('keeps same-headline alerts that differ in content', async () => {
+    mockResponse({
+      alerts: {
+        alert: [
+          {
+            headline: 'Squall Watch In Effect',
+            severity: 'Moderate',
+            event: 'Squall Watch',
+            desc: 'Morning storms.',
+            effective: '2026-04-04T06:00:00Z',
+            expires: '2026-04-04T12:00:00Z',
+          },
+          {
+            headline: 'Squall Watch In Effect',
+            severity: 'Moderate',
+            event: 'Squall Watch',
+            desc: 'Afternoon storms.',
+            effective: '2026-04-04T15:00:00Z',
+            expires: '2026-04-04T21:00:00Z',
+          },
+        ],
+      },
+    });
+
+    const alerts = await fetchAlerts(43.65, -79.38);
+    expect(alerts).toHaveLength(2);
+  });
+
   it('throws when API key is missing', async () => {
     delete process.env.WEATHER_API_KEY;
 

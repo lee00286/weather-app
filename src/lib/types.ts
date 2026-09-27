@@ -88,3 +88,9 @@ export interface ApiErrorResponse {
   error: string;
   status: number;
 }
+
+export interface AirQuality {
+  currentUsAqi: number;
+  hourly: { time: string; usAqi: number; pm25: number; pm10: number }[];
+  timezone: string;
+}
